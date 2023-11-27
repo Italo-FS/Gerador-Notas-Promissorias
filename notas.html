@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notas Promissórias</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script> -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div id="notas-promissorias" class="w-full"></div>
+
+    <script src="script.js"></script>
+
+    <script>
+        function addMonths(date, months) {
+            var newDate = new Date(date);
+            newDate.setUTCHours(0, 0, 0, 0);
+            var currentMonth = newDate.getMonth();
+            newDate.setMonth(currentMonth + months);
+
+            // Ajusta para o fuso horário desejado
+            var timezoneOffset = newDate.getTimezoneOffset();
+            newDate.setMinutes(newDate.getMinutes() + timezoneOffset);
+
+            // Verifica se o mês foi ajustado corretamente
+            if (newDate.getMonth() !== (currentMonth + months) % 12) {
+                // Define o dia como 0 para voltar ao último dia do mês anterior
+                newDate.setDate(0);
+            }
+
+            return newDate;
+        }
+
+        function formatDate(date) {
+            return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1)
+                .toString()
+                .padStart(2, '0')}/${date.getFullYear()}`;
+        }
+
+        function formatDateExtenso(date) {
+            return `${date.getDate().toString().padStart(2, '0')} de ${mesExtenso(date.getMonth())} de ${date.getFullYear()}`;
+        }
+
+        try {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const quantidade = parseInt(urlParams.get('quantidade'), 10);
+            const nomeEmitente = urlParams.get('nomeEmitente');
+            const cpfEmitente = urlParams.get('cpfEmitente');
+            const enderecoEmitente = urlParams.get('enderecoEmitente');
+            const valor = urlParams.get('valor');
+            const dataPrimeiroVencimento = new Date(urlParams.get('dataPrimeiroVencimento')).toISOString().slice(0, 10);
+            const nomeCredor = urlParams.get('nomeCredor');
+            const cpfCredor = urlParams.get('cpfCredor');
+            const referencia = urlParams.get('referencia');
+            const dataAssinatura = new Date(urlParams.get('dataAssinatura'));
+            const localPagamento = urlParams.get('localPagamento');
+            const localAssinatura = urlParams.get('localAssinatura');
+            let notasPromissorias = '';
+
+            notasPromissorias += `<div style="width: 842px;">`
+
+            for (let i = 0; i < quantidade; i++) {
+                const dataVencimento = addMonths(new Date(dataPrimeiroVencimento), i);
+
+                notasPromissorias += `
+                <div class="border border-black rounded-lg p-2 m-2 break-inside-avoid">
+                    <div class="flex">
+                        
+                        ${referencia && `
+                        <div class="w-96 border border-black rounded-md p-1 m-1 text-sm">
+                            <p>${referencia}</p>
+                        </div>
+                        `}
+                        <div>
+                            <div class="flex grow">
+                                <div class="border border-black rounded-lg p-1 m-1 grow text-center bg-slate-50"><p><strong>Nota Promissória ${(i + 1).toString().padStart(quantidade.toString().length, '0')}/${quantidade}</strong></p></div>
+                                <div class="border border-black rounded-lg p-1 m-1 grow text-center bg-slate-50"><p>Data de Vencimento: ${formatDate(dataVencimento)}</p></div>
+                                <div class="border border-black rounded-lg p-1 m-1 grow text-center bg-slate-50"><p>Valor: R$ ${formatNumberStringToString(valor)}</p></div>
+                            </div>
+                            <div class="border border-black p-1 m-1 bg-slate-50">
+                                <p>No dia <b>${formatDateExtenso(dataVencimento)}</b>, pagarei por esta única via de NOTA PROMISSÓRIA a <b>${nomeCredor}</b>, CPF ${formatarDocumento(cpfCredor)}, ou à sua ordem a quantia de <b>${valorExtenso(valor)}</b> em moeda corrente desse país.</p>
+                            </div>
+                            <div class="flex">
+                                <div class="border border-black rounded-lg p-1 m-1 w-5/12 items-center">
+                                    <p class="text-sm">Emitente: ${nomeEmitente}</p>
+                                    <p class="text-sm">CPF: ${formatarDocumento(cpfEmitente)}</p>
+                                    <p class="text-sm">Endereço: ${enderecoEmitente}</p>
+                                </div>
+                                <div class="flex flex-col grow">
+                                    <div class="border border-black rounded-lg p-1 m-1 text-center">
+                                        <p>${formatDateExtenso(dataAssinatura)}, ${localPagamento}</p>
+                                    </div>
+                                    <div class="p-1 m-1 text-center items-center flex flex-col grow">
+                                        
+                                        <div class="border-b border-black grow text-center w-full"></div>
+                                        <p class="text-sm">${nomeEmitente}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-6">
+            `;
+            }
+
+            notasPromissorias += "</div>"
+
+            document.getElementById('notas-promissorias').innerHTML = notasPromissorias;
+
+            // Imprimir automaticamente após o carregamento da página
+            // window.print();
+
+        } catch (e) {
+            console.log(e);
+        }
+    </script>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script> -->
+</body>
+
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Notas Promissórias</title>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script> -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div class="container mx-auto mt-3 mb-3">
+        <form onsubmit="submitForm(event)" class="w-full">
+            <div class="bg-white shadow-md rounded-lg overflow-hidden border">
+                <div class="px-4 py-2">
+                    <h4 class="text-xl font-semibold">Gerador de Notas Promissórias</h4>
+
+                    <div class="mt-2">
+                        <div class="bg-white shadow-md rounded-lg overflow-hidden border">
+                            <div class="px-4 py-2">
+                                <h5 class="text-md font-semibold">Dados Gerais</h5>
+
+                                <div
+                                    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-1 mt-2 auto-cols-auto">
+                                    <div>
+                                        <label class="block text-gray-700 text-sm font-bold mb-1"
+                                            for="quantidade">Parcelas:</label>
+                                        <input type="number" id="quantidade" name="quantidade"
+                                            class="w-full bg-gray-50 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                            value="1" required>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-gray-700 text-sm font-bold mb-1"
+                                            for="valor">Valor:</label>
+                                        <div class="flex">
+                                            <span
+                                                class="bg-gray-100 border-2 border-r-0 border-gray-200 rounded-l py-1 px-3 text-gray-700">R$</span>
+                                            <input type="text" id="valor" name="valor"
+                                                class="w-full bg-gray-50 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                                required>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-gray-700 text-sm font-bold mb-1"
+                                            for="data-primeiro-vencimento">Primeiro Vencimento:</label>
+                                        <input type="date" id="data-primeiro-vencimento" name="data-primeiro-vencimento"
+                                            class="w-full bg-gray-50 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                            required>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-gray-700 text-sm font-bold mb-1"
+                                            for="data-assinatura">Data de Assinatura:</label>
+                                        <input type="date" id="data-assinatura" name="data-assinatura"
+                                            class="w-full bg-gray-50 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                            required>
+                                    </div>
+
+                                    <div class="col-span-1 sm:col-span-2">
+                                        <label class="block text-gray-700 text-sm font-bold mb-1"
+                                            for="local-assinatura">Local da Assinatura:</label>
+                                        <input type="text" id="local-assinatura" name="local-assinatura"
+                                            class="w-full bg-gray-50 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                            value="Fortaleza-CE" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-1 auto-cols-auto">
+                            <div class="bg-white shadow-md rounded-lg overflow-hidden mt-1 border">
+                                <div class="px-4 py-2">
+                                    <h5 class="text-md font-semibold">Devedor - Emitente</h5>
+
+                                    <div
+                                        class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-1 mt-2 auto-cols-auto">
+                                        <div class="md:col-span-2 lg:col-span-3">
+                                            <label class="block text-gray-700 text-sm font-bold mb-1"
+                                                for="nome-emitente">Nome do Emitente:</label>
+                                            <input type="text" id="nome-emitente" name="nome-emitente"
+                                                class="w-full bg-gray-50 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                                required>
+                                        </div>
+
+                                        <div class="md:col-span-1 lg:col-span-2">
+                                            <label class="block text-gray-700 text-sm font-bold mb-1"
+                                                for="cpf-emitente">CPF
+                                                do Emitente:</label>
+                                            <input type="text" id="cpf-emitente" name="cpf-emitente"
+                                                class="w-full bg-gray-50 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                                required>
+                                        </div>
+
+                                        <div class="md:col-span-3 lg:col-span-5">
+                                            <label class="block text-gray-700 text-sm font-bold mb-1"
+                                                for="endereco-emitente">Endereço do Emitente:</label>
+                                            <input type="text" id="endereco-emitente" name="endereco-emitente"
+                                                class="w-full bg-gray-50 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white shadow-md rounded-lg overflow-hidden mt-1 border">
+                                <div class="px-4 py-2">
+                                    <h5 class="text-md font-semibold">Credor</h5>
+
+                                    <div class="grid md:grid-cols-3 lg:grid-cols-5 gap-1 mt-2">
+                                        <div class="md:col-span-2 lg:col-span-3">
+                                            <label class="block text-gray-700 text-sm font-bold mb-1"
+                                                for="nome-credor">Nome
+                                                do Credor:</label>
+                                            <input type="text" id="nome-credor" name="nome-credor"
+                                                class="w-full bg-gray-50 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                                required>
+                                        </div>
+
+                                        <div class="md:col-span-1 lg:col-span-2">
+                                            <label class="block text-gray-700 text-sm font-bold mb-1"
+                                                for="cpf-credor">CPF
+                                                do Credor:</label>
+                                            <input type="text" id="cpf-credor" name="cpf-credor"
+                                                class="w-full bg-gray-50 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                                required>
+                                        </div>
+
+                                        <div class="md:col-span-3 lg:col-span-5">
+                                            <label class="block text-gray-700 text-sm font-bold mb-1"
+                                                for="local-pagamento">Local de Pagamento:</label>
+                                            <input type="text" id="local-pagamento" name="local-pagamento"
+                                                class="w-full bg-gray-50 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
+                                                value="Fortaleza-CE" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white shadow-md rounded-lg overflow-hidden mt-1 border">
+                            <div class="px-4 py-2 mt-1">
+                                <div>
+                                    <label class="block text-gray-700 text-sm font-bold mb-1"
+                                        for="referencia">Referencia:</label>
+                                    <textarea id="referencia" name="referencia"
+                                        class="w-full bg-gray-50 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-center py-2">
+                    <button type="submit"
+                        class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Gerar Notas
+                        Promissórias</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+            const nomeEmitente = document.getElementById('nome-emitente').value;
+            const cpfEmitente = document.getElementById('cpf-emitente').value;
+            const enderecoEmitente = document.getElementById('endereco-emitente').value;
+            const valor = document.getElementById('valor').value;
+            const dataPrimeiroVencimento = document.getElementById('data-primeiro-vencimento').value;
+            const nomeCredor = document.getElementById('nome-credor').value;
+            const cpfCredor = document.getElementById('cpf-credor').value;
+            const quantidade = parseInt(document.getElementById('quantidade').value, 10);
+            const referencia = document.getElementById('referencia').value;
+            const dataAssinatura = document.getElementById('data-assinatura').value;
+            const localPagamento = document.getElementById('local-pagamento').value;
+            const localAssinatura = document.getElementById('local-assinatura').value;
+
+
+            if (!quantidade || quantidade < 1) {
+                alert("Quantidade de parcelas inválida.")
+                return
+            }
+
+            if (!valor || valor < 1) {
+                alert("Valor inválido.")
+                return
+            }
+
+            const url = `notas.html?nomeEmitente=${nomeEmitente}&cpfEmitente=${cpfEmitente}&enderecoEmitente=${enderecoEmitente}&valor=${valor}&dataPrimeiroVencimento=${dataPrimeiroVencimento}&nomeCredor=${nomeCredor}&cpfCredor=${cpfCredor}&quantidade=${quantidade}&referencia=${referencia}&dataAssinatura=${dataAssinatura}&localPagamento=${localPagamento}&localAssinatura=${localAssinatura}`;
+            window.open(url, '_blank');
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
