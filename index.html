@@ -56,7 +56,7 @@
                                                 class="bg-gray-100 border-2 border-r-0 border-gray-200 rounded-l py-1 px-3 text-gray-700">R$</span>
                                             <input type="text" id="valor" name="valor"
                                                 class="w-full bg-gray-50 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                                onchange="validate({value: this.value, validatedElement: this, validation: isValidValue, hintId: 'value-hint'})"
+                                                onchange="validate({value: parseFloat(this.value.replace(',', '.')), validatedElement: this, validation: isValidValue, hintId: 'value-hint'})"
                                                 required>
                                         </div>
                                         <p class="text-sm text-red-600 hidden px-2" id="value-hint:false">
@@ -198,7 +198,7 @@
             const nomeEmitente = document.getElementById('nome-emitente').value;
             const cpfEmitente = document.getElementById('cpf-emitente').value.replace(/[\D]/, "");
             const enderecoEmitente = document.getElementById('endereco-emitente').value;
-            const valor = document.getElementById('valor').value;
+            const valor = parseFloat(document.getElementById('valor').value.replace(',', '.'));
             const dataPrimeiroVencimento = document.getElementById('data-primeiro-vencimento').value;
             const nomeCredor = document.getElementById('nome-credor').value;
             const cpfCredor = document.getElementById('cpf-credor').value.replace(/[\D]/, "");
@@ -225,7 +225,7 @@
                 return
             }
 
-            const url = `notas.html?nomeEmitente=${nomeEmitente}&cpfEmitente=${cpfEmitente}&enderecoEmitente=${enderecoEmitente}&valor=${valor}&dataPrimeiroVencimento=${dataPrimeiroVencimento}&nomeCredor=${nomeCredor}&cpfCredor=${cpfCredor}&quantidade=${quantidade}&referencia=${referencia}&dataAssinatura=${dataAssinatura}&localPagamento=${localPagamento}&localAssinatura=${localAssinatura}`;
+            const url = `notas.html?nomeEmitente=${nomeEmitente}&cpfEmitente=${cpfEmitente}&enderecoEmitente=${enderecoEmitente}&valor=${valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}&dataPrimeiroVencimento=${dataPrimeiroVencimento}&nomeCredor=${nomeCredor}&cpfCredor=${cpfCredor}&quantidade=${quantidade}&referencia=${referencia}&dataAssinatura=${dataAssinatura}&localPagamento=${localPagamento}&localAssinatura=${localAssinatura}`;
             window.open(url, '_blank');
         }
     </script>

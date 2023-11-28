@@ -133,7 +133,7 @@ function __numeroExtenso(numero) {
     numeroPorExtenso = numeroPorExtenso.replace(/\s*$/, "");
     numeroPorExtenso = numeroPorExtenso.replace(/^(um mil) /, "mil ");
 
-    console.log(numeroPorExtenso, '|', u)
+    // console.log(numeroPorExtenso, '|', u)
 
     return [numeroPorExtenso, u];
 }
@@ -154,40 +154,42 @@ function formatarDocumento(doc) {
     }
 }
 
-function europeanDecimalFormat(string) {
-    const EuropeanDecimalFormatRegex = /^(\d{1,3}(?:\.?\d{3})*,\d{2})$/; // #.##0,00
-    return EuropeanDecimalFormatRegex.test(string);
-}
+// function isEuropeanDecimalFormat(string) {
+//     const EuropeanDecimalFormatRegex = /^(\d{1,3}(?:\.?\d{3})*,\d{2})$/; // #.##0,00
+//     return EuropeanDecimalFormatRegex.test(string);
+// }
 
-function internationalDecimalFormatRegex(string) {
-    const InternationalDecimalFormatRegex = /^(\d{1,3}(?:,?\d{3})*\.\d{2})$/; // #,##0.00
-    return InternationalDecimalFormatRegex.test(string);
-}
+// function isInternationalDecimalFormatRegex(string) {
+//     const InternationalDecimalFormatRegex = /^(\d{1,3}(?:,?\d{3})*\.\d{2})$/; // #,##0.00
+//     return InternationalDecimalFormatRegex.test(string);
+// }
 
-function noDecimalFormatRegex(string) {
-    const NoDecimalFormatRegex = /^(\d+)$/; // ######0
-    return NoDecimalFormatRegex.test(string);
-}
+// function isNoDecimalFormatRegex(string) {
+//     const NoDecimalFormatRegex = /^(\d+)$/; // ######0
+//     return NoDecimalFormatRegex.test(string);
+// }
 
-function processEuropeanDecimalFormatStringToInternationalDecimalFormatString(string) {
-    return formatNumberStringToString(parseFloat(string.replace(/\./g, '').replace(',', '.')).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-}
+// function convertEuropeanToInternationalFormat(string) {
+//     return parseFloat(string.replace(/\./g, '').replace(',', '.')).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+// }
 
-function processInternationalDecimalFormatString(string) {
-    return string.replace(/\d(?=(\d{3})+\.)/g, '$&,').replace('.', '@').replace(',', '.').replace('@', ',');
-}
+// function convertInternationalToEuropeanFormat(string) {
+//     console.log("a", string.replace(/\d(?=(\d{3})+\.)/g, '$&,'))
+//     return string.replace(/\d(?=(\d{3})+\.)/g, '$&,').replace('.', '@').replace(',', '.').replace('@', ',');
+// }
 
-function formatNumberStringToString(string) {
-    try {
-        string = string.trim();
-        if (europeanDecimalFormat(string)) return processEuropeanDecimalFormatStringToInternationalDecimalFormatString(string);
-        if (internationalDecimalFormatRegex(string)) return processInternationalDecimalFormatString(string);
-        if (noDecimalFormatRegex(string)) return processEuropeanDecimalFormatStringToInternationalDecimalFormatString(string);
-        throw new Error(`formato de '${string}' não identificado.`);
-    } catch (e) {
-        throw new Error(`Ocorreu um erro ao tentar converter ${string} para texto`);
-    }
-}
+// function formatNumberToEuropeanDecimalFormat(string) {
+//     try {
+//         string = string.trim();
+//         if (isNoDecimalFormatRegex(string)) return convertInternationalToEuropeanFormat(string);
+//         if (isInternationalDecimalFormatRegex(string)) return convertInternationalToEuropeanFormat(string);
+//         if (isEuropeanDecimalFormat(string)) return convertEuropeanToInternationalFormat(string);
+//         throw new Error(`formato de '${string}' não identificado.`);
+//     } catch (e) {
+//         return e
+//         // throw new Error(`Ocorreu um erro ao tentar converter ${string} para texto`);
+//     }
+// }
 
 function validate({ value, validatedElement, validation, hintId } = data) {
     const trueHint = document.getElementById(`${hintId}:true`)
@@ -229,6 +231,7 @@ function isCpfValid(cpf) {
 }
 
 function isValidValue(value) {
+    console.log("a", value)
     return value >= 1;
 }
 
