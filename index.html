@@ -217,13 +217,13 @@
                 return
             }
 
-            if (!cpfEmitente || !isCpfValid(cpfEmitente)) {
-                return
-            }
+            // if (!cpfEmitente || !isCpfValid(cpfEmitente)) {
+            //     return
+            // }
 
-            if (!cpfCredor || !isCpfValid(cpfCredor)) {
-                return
-            }
+            // if (!cpfCredor || !isCpfValid(cpfCredor)) {
+            //     return
+            // }
 
             const url = `notas.html?nomeEmitente=${nomeEmitente}&cpfEmitente=${cpfEmitente}&enderecoEmitente=${enderecoEmitente}&valor=${valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}&dataPrimeiroVencimento=${dataPrimeiroVencimento}&nomeCredor=${nomeCredor}&cpfCredor=${cpfCredor}&quantidade=${quantidade}&referencia=${referencia}&dataAssinatura=${dataAssinatura}&localPagamento=${localPagamento}&localAssinatura=${localAssinatura}`;
             window.open(url, '_blank');
