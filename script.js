@@ -188,3 +188,50 @@ function formatNumberStringToString(string) {
         throw new Error(`Ocorreu um erro ao tentar converter ${string} para texto`);
     }
 }
+
+function validate({ value, validatedElement, validation, hintId } = data) {
+    const trueHint = document.getElementById(`${hintId}:true`)
+    const falseHint = document.getElementById(`${hintId}:false`)
+    if (validation(value)) {
+        if (trueHint) trueHint.classList.remove('hidden');
+        if (falseHint) falseHint.classList.add('hidden');
+        if (validatedElement) validatedElement.classList.remove('invalid');
+    } else {
+        if (falseHint) falseHint.classList.remove('hidden');
+        if (trueHint) trueHint.classList.add('hidden');
+        if (validatedElement) validatedElement.classList.add('invalid');
+    }
+}
+
+function isCpfValid(cpf) {
+    const sumDigits = (string) => {
+        let sum = 0;
+        for (let i = 0; i < string.length; i++) {
+            sum += parseInt(cpf[i]) * (string.length + 1 - i);
+        }
+        return sum;
+    }
+
+    cpf = cpf.toString().replace(/[^0-9]/g, "");
+    if (cpf.length !== 11) {
+        return false;
+    }
+
+    const soma1 = sumDigits(cpf.substring(0, 9))
+    const resto1 = soma1 % 11;
+    const digito1 = (11 - resto1) % 10;
+
+    const soma2 = sumDigits(cpf.substring(0, 10))
+    const resto2 = soma2 % 11;
+    const digito2 = (11 - resto2) % 10;
+
+    return cpf[9] == digito1 && cpf[10] == digito2;
+}
+
+function isValidValue(value) {
+    return value >= 1;
+}
+
+function isValidInstallments(value) {
+    return value >= 1;
+}

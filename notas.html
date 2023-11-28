@@ -7,12 +7,6 @@
     <title>Notas Promissórias</title>
     <link rel="stylesheet" href="styles.css">
 
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script> -->
-
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -84,24 +78,24 @@
                         `}
                         <div>
                             <div class="flex grow">
-                                <div class="border border-black rounded-lg p-1 m-1 grow text-center bg-slate-50"><p><strong>Nota Promissória ${(i + 1).toString().padStart(quantidade.toString().length, '0')}/${quantidade}</strong></p></div>
-                                <div class="border border-black rounded-lg p-1 m-1 grow text-center bg-slate-50"><p>Data de Vencimento: ${formatDate(dataVencimento)}</p></div>
-                                <div class="border border-black rounded-lg p-1 m-1 grow text-center bg-slate-50"><p>Valor: R$ ${formatNumberStringToString(valor)}</p></div>
+                                <div class="border border-black rounded-md p-1 m-1 grow text-center bg-slate-50"><p><strong>Nota Promissória ${(i + 1).toString().padStart(quantidade.toString().length, '0')}/${quantidade}</strong></p></div>
+                                <div class="border border-black rounded-md p-1 m-1 grow text-center bg-slate-50"><p>Data de Vencimento: ${formatDate(dataVencimento)}</p></div>
+                                <div class="border border-black rounded-md p-1 m-1 grow text-center bg-slate-50"><p>Valor: R$ ${formatNumberStringToString(valor)}</p></div>
                             </div>
-                            <div class="border border-black p-1 m-1 bg-slate-50">
+                            <div class="border border-black rounded-md p-1 m-1 bg-slate-50">
                                 <p>No dia <b>${formatDateExtenso(dataVencimento)}</b>, pagarei por esta única via de NOTA PROMISSÓRIA a <b>${nomeCredor}</b>, CPF ${formatarDocumento(cpfCredor)}, ou à sua ordem a quantia de <b>${valorExtenso(valor)}</b> em moeda corrente desse país.</p>
                             </div>
                             <div class="flex">
-                                <div class="border border-black rounded-lg p-1 m-1 w-5/12 items-center">
+                                <div class="border border-black rounded-md p-1 m-1 w-5/12 items-center">
                                     <p class="text-sm">Emitente: ${nomeEmitente}</p>
                                     <p class="text-sm">CPF: ${formatarDocumento(cpfEmitente)}</p>
                                     <p class="text-sm">Endereço: ${enderecoEmitente}</p>
                                 </div>
                                 <div class="flex flex-col grow">
-                                    <div class="border border-black rounded-lg p-1 m-1 text-center">
+                                    <div class="border border-black rounded-md p-1 m-1 text-center">
                                         <p>${formatDateExtenso(dataAssinatura)}, ${localPagamento}</p>
                                     </div>
-                                    <div class="p-1 m-1 text-center items-center flex flex-col grow">
+                                    <div class="p-1 m-1 h-24 text-center items-center flex flex-col grow">
                                         
                                         <div class="border-b border-black grow text-center w-full"></div>
                                         <p class="text-sm">${nomeEmitente}</p>
@@ -126,13 +120,6 @@
             console.log(e);
         }
     </script>
-
-    <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-        crossorigin="anonymous"></script> -->
 </body>
 
 </html>
