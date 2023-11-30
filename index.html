@@ -41,11 +41,9 @@
                                         <input type="number" id="quantidade" name="quantidade"
                                             class="w-full bg-gray-50 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
                                             value="1" min="1"
-                                            onchange="validate({value: this.value, validatedElement: this, validation: isValidInstallments, hintId: 'installments-hint'})"
+                                            onchange="validate({value: this.value, validatedElement: this, validation: isValidInstallments, hintId: 'installments-hint', falseMessage: 'Parcelas inválidas!'})"
                                             required>
-                                        <p class="text-sm text-red-600 hidden px-2" id="installments-hint:false">
-                                            <span class="font-medium">Parcelas inválidas!</span>
-                                        </p>
+                                        <span class="text-sm hidden px-2 font-semibold" id="installments-hint"></span>
                                     </div>
 
                                     <div>
@@ -56,12 +54,10 @@
                                                 class="bg-gray-100 border-2 border-r-0 border-gray-200 rounded-l py-1 px-3 text-gray-700">R$</span>
                                             <input type="text" id="valor" name="valor"
                                                 class="w-full bg-gray-50 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                                onchange="validate({value: parseFloat(this.value.replace(',', '.')), validatedElement: this, validation: isValidValue, hintId: 'value-hint'})"
+                                                onchange="validate({value: parseFloat(this.value.replace(',', '.')), validatedElement: this, validation: isValidValue, hintId: 'value-hint', falseMessage: 'Valor inválido!'})"
                                                 required>
                                         </div>
-                                        <p class="text-sm text-red-600 hidden px-2" id="value-hint:false">
-                                            <span class="font-medium">Valor inválido!</span>
-                                        </p>
+                                        <span class="text-sm hidden px-2  font-semibold" id="value-hint"></span>
                                     </div>
 
                                     <div>
@@ -100,7 +96,9 @@
                                         class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-1 mt-2 auto-cols-auto">
                                         <div class="md:col-span-2 lg:col-span-3">
                                             <label class="block text-gray-700 text-sm font-bold mb-1"
-                                                for="nome-emitente">Nome do Emitente:</label>
+                                                for="nome-emitente">
+                                                Nome do Emitente:
+                                            </label>
                                             <input type="text" id="nome-emitente" name="nome-emitente"
                                                 class="w-full bg-gray-50 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
                                                 required>
@@ -108,15 +106,15 @@
 
                                         <div class="md:col-span-1 lg:col-span-2">
                                             <label class="block text-gray-700 text-sm font-bold mb-1"
-                                                for="cpf-emitente">CPF
-                                                do Emitente:</label>
+                                                for="cpf-emitente">
+                                                CPF do Emitente:
+                                            </label>
                                             <input type="text" id="cpf-emitente" name="cpf-emitente"
                                                 class="w-full bg-gray-50 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                                onchange="validate({value: this.value, validatedElement: this, validation: isCpfValid, hintId: 'cpf-emitente-hint'})"
+                                                onchange="validate({value: this.value, validatedElement: this, validation: isCpfValid, hintId: 'cpf-emitente-hint', falseMessage: 'CPF Inválido!', trueMessage: 'CPF Válido!'})"
                                                 required>
-                                            <p class="text-sm text-red-600 hidden px-2" id="cpf-emitente-hint:false">
-                                                <span class="font-medium">CPF Inválido!</span>
-                                            </p>
+                                            <span class="text-sm hidden px-2 font-semibold"
+                                                id="cpf-emitente-hint"></span>
                                         </div>
 
                                         <div class="md:col-span-3 lg:col-span-5">
@@ -149,11 +147,9 @@
                                                 do Credor:</label>
                                             <input type="text" id="cpf-credor" name="cpf-credor"
                                                 class="w-full bg-gray-50 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                                onchange="validate({value: this.value, validatedElement: this, validation: isCpfValid, hintId: 'cpf-credor-hint'})"
+                                                onchange="validate({value: this.value, validatedElement: this, validation: isCpfValid, hintId: 'cpf-credor-hint', falseMessage: 'CPF Inválido!'})"
                                                 required>
-                                            <p class="text-sm text-red-600 hidden px-2" id="cpf-credor-hint:false">
-                                                <span class="font-medium">CPF Inválido!</span>
-                                            </p>
+                                            <span class="text-sm hidden px-2 font-semibold" id="cpf-credor-hint"></span>
                                         </div>
 
                                         <div class="md:col-span-3 lg:col-span-5">
@@ -208,25 +204,31 @@
             const localPagamento = document.getElementById('local-pagamento').value;
             const localAssinatura = document.getElementById('local-assinatura').value;
 
+            const validadeCpfEmitente = validate({
+                value: cpfEmitente,
+                validatedElement: document.getElementById('cpf-emitente'),
+                validation: () => (cpfEmitente.length == 11),
+                hintId: 'cpf-emitente-hint',
+                falseMessage: 'Tamanho inválido!'
+            });
 
-            if (!quantidade || !isValidInstallments(quantidade)) {
-                return
+            const validadeCpfCredor = validate({
+                value: cpfCredor,
+                validatedElement: document.getElementById('cpf-credor'),
+                validation: () => (cpfCredor.length == 11),
+                hintId: 'cpf-credor-hint',
+                falseMessage: 'Tamanho inválido!'
+            });
+
+            if (
+                validadeCpfEmitente
+                && validadeCpfCredor
+                && quantidade && isValidInstallments(quantidade)
+                && valor && isValidValue(valor)
+            ) {
+                const url = `notas.html?nomeEmitente=${nomeEmitente}&cpfEmitente=${cpfEmitente}&enderecoEmitente=${enderecoEmitente}&valor=${valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}&dataPrimeiroVencimento=${dataPrimeiroVencimento}&nomeCredor=${nomeCredor}&cpfCredor=${cpfCredor}&quantidade=${quantidade}&referencia=${referencia}&dataAssinatura=${dataAssinatura}&localPagamento=${localPagamento}&localAssinatura=${localAssinatura}`;
+                window.open(url, '_blank');
             }
-
-            if (!valor || !isValidValue(valor)) {
-                return
-            }
-
-            // if (!cpfEmitente || !isCpfValid(cpfEmitente)) {
-            //     return
-            // }
-
-            // if (!cpfCredor || !isCpfValid(cpfCredor)) {
-            //     return
-            // }
-
-            const url = `notas.html?nomeEmitente=${nomeEmitente}&cpfEmitente=${cpfEmitente}&enderecoEmitente=${enderecoEmitente}&valor=${valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}&dataPrimeiroVencimento=${dataPrimeiroVencimento}&nomeCredor=${nomeCredor}&cpfCredor=${cpfCredor}&quantidade=${quantidade}&referencia=${referencia}&dataAssinatura=${dataAssinatura}&localPagamento=${localPagamento}&localAssinatura=${localAssinatura}`;
-            window.open(url, '_blank');
         }
     </script>
 

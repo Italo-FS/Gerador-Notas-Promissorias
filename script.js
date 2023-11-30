@@ -191,18 +191,30 @@ function formatarDocumento(doc) {
 //     }
 // }
 
-function validate({ value, validatedElement, validation, hintId } = data) {
-    const trueHint = document.getElementById(`${hintId}:true`)
-    const falseHint = document.getElementById(`${hintId}:false`)
-    if (validation(value)) {
-        if (trueHint) trueHint.classList.remove('hidden');
-        if (falseHint) falseHint.classList.add('hidden');
+function validate({ value, validatedElement, validation, hintId, trueMessage, falseMessage } = data) {
+    const hint = document.getElementById(`${hintId}`);
+
+    const response = validation(value);
+    if (response) {
+        if (hint && trueMessage) {
+            hint.innerHTML = trueMessage;
+            hint.classList.remove('hidden');
+            hint.classList.add('text-green-600');
+        }
         if (validatedElement) validatedElement.classList.remove('invalid');
+        if (validatedElement) validatedElement.classList.add('valid');
+
     } else {
-        if (falseHint) falseHint.classList.remove('hidden');
-        if (trueHint) trueHint.classList.add('hidden');
+        if (hint && falseMessage) {
+            hint.innerHTML = falseMessage;
+            hint.classList.remove('hidden');
+            hint.classList.add('text-red-600');
+        }
         if (validatedElement) validatedElement.classList.add('invalid');
+        if (validatedElement) validatedElement.classList.remove('valid');
     }
+
+    return response;
 }
 
 function isCpfValid(cpf) {
