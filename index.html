@@ -111,10 +111,9 @@
                                             </label>
                                             <input type="text" id="cpf-emitente" name="cpf-emitente"
                                                 class="w-full bg-gray-50 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                                onchange="validate({value: this.value, validatedElement: this, validation: isCpfValid, hintId: 'cpf-emitente-hint', falseMessage: 'CPF Inválido!', trueMessage: 'CPF Válido!'})"
+                                                onchange="cleanNonNumbers(this), validate({value: this.value, validatedElement: this, validation: isCpfValid, hintId: 'cpf-emitente-hint', falseMessage: 'CPF Inválido!', trueMessage: 'CPF Válido!'})"
                                                 required>
-                                            <span class="text-sm hidden px-2 font-semibold"
-                                                id="cpf-emitente-hint"></span>
+                                            <span class="text-sm hidden px-2 font-semibold" id="cpf-emitente-hint"></span>
                                         </div>
 
                                         <div class="md:col-span-3 lg:col-span-5">
@@ -147,7 +146,7 @@
                                                 do Credor:</label>
                                             <input type="text" id="cpf-credor" name="cpf-credor"
                                                 class="w-full bg-gray-50 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
-                                                onchange="validate({value: this.value, validatedElement: this, validation: isCpfValid, hintId: 'cpf-credor-hint', falseMessage: 'CPF Inválido!'})"
+                                                onchange="cleanNonNumbers(this), validate({value: this.value, validatedElement: this, validation: isCpfValid, hintId: 'cpf-credor-hint', falseMessage: 'CPF Inválido!', trueMessage: 'CPF Válido!'})"
                                                 required>
                                             <span class="text-sm hidden px-2 font-semibold" id="cpf-credor-hint"></span>
                                         </div>

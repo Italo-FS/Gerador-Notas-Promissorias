@@ -1,15 +1,29 @@
 function mesExtenso(mes) {
-    const meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+    const meses = [
+        "janeiro",
+        "fevereiro",
+        "março",
+        "abril",
+        "maio",
+        "junho",
+        "julho",
+        "agosto",
+        "setembro",
+        "outubro",
+        "novembro",
+        "dezembro",
+    ];
 
-    if (mes > 11 || mes < 0) throw new Error(`Mês ${mes} inexistente`)
+    if (mes > 11 || mes < 0) throw new Error(`Mês ${mes} inexistente`);
 
     return meses[mes];
 }
 
-
 function valorExtenso(numeroCompleto) {
     parteInteiraDoNumero = numeroCompleto.split(",")[0].toString();
-    parteFracionariaDoNumero = numeroCompleto.split(",")[1] ? numeroCompleto.split(",")[1].toString().padEnd(2, '0').substring(0, 2) : '00';
+    parteFracionariaDoNumero = numeroCompleto.split(",")[1]
+        ? numeroCompleto.split(",")[1].toString().padEnd(2, "0").substring(0, 2)
+        : "00";
 
     let temp = __numeroExtenso(parteInteiraDoNumero);
     let numeroPorExtenso = temp[0];
@@ -42,17 +56,81 @@ function valorExtenso(numeroCompleto) {
 }
 
 function numeroExtenso(numero) {
-    if (typeof numero === "number")
-        numero = numero.toString();
+    if (typeof numero === "number") numero = numero.toString();
     return __numeroExtenso(numero)[0];
 }
 
 function __numeroExtenso(numero) {
     const EXTENSO = [
-        ["", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove", "dez", "onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezessete", "dezoito", "dezenove"],
-        ["", "dez", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa"],
-        ["", "cento", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos"],
-        ["", "mil", "milhão", "bilhão", "trilhão", "quadrilhão", "quintilhão", "sextilhão", "setilhão", "octilhão", "nonilhão", "decilhão", "undecilhão", "dodecilhão", "tredecilhão", "quatrodecilhão", "quindecilhão", "sedecilhão", "septendecilhão", "octencilhão", "nonencilhão"]
+        [
+            "",
+            "um",
+            "dois",
+            "três",
+            "quatro",
+            "cinco",
+            "seis",
+            "sete",
+            "oito",
+            "nove",
+            "dez",
+            "onze",
+            "doze",
+            "treze",
+            "quatorze",
+            "quinze",
+            "dezesseis",
+            "dezessete",
+            "dezoito",
+            "dezenove",
+        ],
+        [
+            "",
+            "dez",
+            "vinte",
+            "trinta",
+            "quarenta",
+            "cinquenta",
+            "sessenta",
+            "setenta",
+            "oitenta",
+            "noventa",
+        ],
+        [
+            "",
+            "cento",
+            "duzentos",
+            "trezentos",
+            "quatrocentos",
+            "quinhentos",
+            "seiscentos",
+            "setecentos",
+            "oitocentos",
+            "novecentos",
+        ],
+        [
+            "",
+            "mil",
+            "milhão",
+            "bilhão",
+            "trilhão",
+            "quadrilhão",
+            "quintilhão",
+            "sextilhão",
+            "setilhão",
+            "octilhão",
+            "nonilhão",
+            "decilhão",
+            "undecilhão",
+            "dodecilhão",
+            "tredecilhão",
+            "quatrodecilhão",
+            "quindecilhão",
+            "sedecilhão",
+            "septendecilhão",
+            "octencilhão",
+            "nonencilhão",
+        ],
     ];
     let numeroPorExtenso = "";
     numero = numero.replace(/\D/g, "");
@@ -63,7 +141,8 @@ function __numeroExtenso(numero) {
         numeroPorExtenso += "zero";
     } else {
         let quantidadeDeCentenas = Math.ceil(numero.length / 3); // Armazena a quantidade de centenas ex: [0].[000].[000],00 => quantidade_de_centenas = 3
-        let algarismosNaPrimeiraCentena = numero.length - (quantidadeDeCentenas - 1) * 3; // Armazena a quantidade de numero na primeira centena
+        let algarismosNaPrimeiraCentena =
+            numero.length - (quantidadeDeCentenas - 1) * 3; // Armazena a quantidade de numero na primeira centena
         u = 0;
 
         // Completa a primeira centena com zeros à esquerda.
@@ -72,16 +151,28 @@ function __numeroExtenso(numero) {
         }
 
         // Pecorre cada centena
-        for (let posicaoCentena = 1; posicaoCentena <= quantidadeDeCentenas; posicaoCentena++) {
-            let posicaoDoTerceiroAlgarismoDaCentenaAnterior = (posicaoCentena - 1) * 3; // Armazena a posição do maior do terceiro algarismo da centena atual.
-            let centenaAtual = numero.substr(posicaoDoTerceiroAlgarismoDaCentenaAnterior, 3); // Armazena o valor da Centena
+        for (
+            let posicaoCentena = 1;
+            posicaoCentena <= quantidadeDeCentenas;
+            posicaoCentena++
+        ) {
+            let posicaoDoTerceiroAlgarismoDaCentenaAnterior =
+                (posicaoCentena - 1) * 3; // Armazena a posição do maior do terceiro algarismo da centena atual.
+            let centenaAtual = numero.substr(
+                posicaoDoTerceiroAlgarismoDaCentenaAnterior,
+                3
+            ); // Armazena o valor da Centena
             let centenasRestantes = quantidadeDeCentenas - posicaoCentena;
 
             if (centenaAtual !== "000") {
                 let pularScannerDeAlgarismos = false;
 
                 // Liga as centenas
-                if (posicaoCentena > 1 && (centenaAtual[0] === "0" || (centenaAtual[1] === "0" && centenaAtual[2] === "0"))) {
+                if (
+                    posicaoCentena > 1 &&
+                    (centenaAtual[0] === "0" ||
+                        (centenaAtual[1] === "0" && centenaAtual[2] === "0"))
+                ) {
                     numeroPorExtenso += " e";
                 }
 
@@ -91,19 +182,45 @@ function __numeroExtenso(numero) {
                 }
 
                 if (!pularScannerDeAlgarismos) {
-                    for (let posicaoAlgarismo = 0; posicaoAlgarismo < 3; posicaoAlgarismo++) {
+                    for (
+                        let posicaoAlgarismo = 0;
+                        posicaoAlgarismo < 3;
+                        posicaoAlgarismo++
+                    ) {
                         if (posicaoAlgarismo === 1) {
-                            let dezenaAtual = numero.substr(posicaoDoTerceiroAlgarismoDaCentenaAnterior + posicaoAlgarismo, 2);
-                            if (Number(dezenaAtual) < 20) { // Se está entre um e dezenove.
-                                numeroPorExtenso += " " + EXTENSO[0][Number(dezenaAtual)];
+                            let dezenaAtual = numero.substr(
+                                posicaoDoTerceiroAlgarismoDaCentenaAnterior +
+                                    posicaoAlgarismo,
+                                2
+                            );
+                            if (Number(dezenaAtual) < 20) {
+                                // Se está entre um e dezenove.
+                                numeroPorExtenso +=
+                                    " " + EXTENSO[0][Number(dezenaAtual)];
                                 break;
                             }
                         }
 
-                        let unidadeAtual = numero.substr(posicaoDoTerceiroAlgarismoDaCentenaAnterior + posicaoAlgarismo, 1);
+                        let unidadeAtual = numero.substr(
+                            posicaoDoTerceiroAlgarismoDaCentenaAnterior +
+                                posicaoAlgarismo,
+                            1
+                        );
                         if (Number(unidadeAtual) > 0) {
-                            numeroPorExtenso += " " + EXTENSO[3 - posicaoAlgarismo - 1][Number(unidadeAtual)];
-                            if (posicaoAlgarismo < 2 && Number(centenaAtual.substr(posicaoAlgarismo + 1, 3 - posicaoAlgarismo)) > 0) {
+                            numeroPorExtenso +=
+                                " " +
+                                EXTENSO[3 - posicaoAlgarismo - 1][
+                                    Number(unidadeAtual)
+                                ];
+                            if (
+                                posicaoAlgarismo < 2 &&
+                                Number(
+                                    centenaAtual.substr(
+                                        posicaoAlgarismo + 1,
+                                        3 - posicaoAlgarismo
+                                    )
+                                ) > 0
+                            ) {
                                 numeroPorExtenso += " e";
                             }
                         }
@@ -116,7 +233,7 @@ function __numeroExtenso(numero) {
             if (parseInt(centenaAtual) > 0) {
                 let temp = " " + EXTENSO[3][centenasRestantes];
 
-                temp += (centenasRestantes > 1) ? ", " : "";
+                temp += centenasRestantes > 1 ? ", " : "";
 
                 if (centenaAtual !== "001") {
                     temp = temp.replace(/ão/, "ões");
@@ -140,17 +257,25 @@ function __numeroExtenso(numero) {
 
 function formatarDocumento(doc) {
     // Remove todos os caracteres não numéricos
-    const docNumerico = doc.replace(/\D/g, '');
+    const docNumerico = doc.replace(/\D/g, "");
 
     // Verifica se é um CPF (tem 11 dígitos) ou CNPJ (tem 14 dígitos)
     if (docNumerico.length === 11) {
         // Formata como CPF: 000.000.000-00
-        return docNumerico.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+        return docNumerico.replace(
+            /(\d{3})(\d{3})(\d{3})(\d{2})/,
+            "$1.$2.$3-$4"
+        );
     } else if (docNumerico.length === 14) {
         // Formata como CNPJ: 00.000.000/0000-00
-        return docNumerico.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+        return docNumerico.replace(
+            /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+            "$1.$2.$3/$4-$5"
+        );
     } else {
-        throw new Error('Formato de documento inválido. Por favor, insira um CPF ou CNPJ válido.');
+        throw new Error(
+            "Formato de documento inválido. Por favor, insira um CPF ou CNPJ válido."
+        );
     }
 }
 
@@ -191,62 +316,96 @@ function formatarDocumento(doc) {
 //     }
 // }
 
-function validate({ value, validatedElement, validation, hintId, trueMessage, falseMessage } = data) {
+function validate({
+    value,
+    validatedElement,
+    validation,
+    hintId,
+    trueMessage,
+    falseMessage,
+} = data) {
     const hint = document.getElementById(`${hintId}`);
 
     const response = validation(value);
     if (response) {
         if (hint && trueMessage) {
             hint.innerHTML = trueMessage;
-            hint.classList.remove('hidden');
-            hint.classList.add('text-green-600');
+            hint.classList.remove("hidden");
+            hint.classList.add("text-green-600");
         }
-        if (validatedElement) validatedElement.classList.remove('invalid');
-        if (validatedElement) validatedElement.classList.add('valid');
-
+        if (validatedElement) validatedElement.classList.remove("invalid");
+        if (validatedElement) validatedElement.classList.add("valid");
     } else {
         if (hint && falseMessage) {
             hint.innerHTML = falseMessage;
-            hint.classList.remove('hidden');
-            hint.classList.add('text-red-600');
+            hint.classList.remove("hidden");
+            hint.classList.add("text-red-600");
         }
-        if (validatedElement) validatedElement.classList.add('invalid');
-        if (validatedElement) validatedElement.classList.remove('valid');
+        if (validatedElement) validatedElement.classList.add("invalid");
+        if (validatedElement) validatedElement.classList.remove("valid");
     }
 
     return response;
 }
 
-function isCpfValid(cpf) {
-    const sumDigits = (string) => {
-        let sum = 0;
-        for (let i = 0; i < string.length; i++) {
-            sum += parseInt(cpf[i]) * (string.length + 1 - i);
-        }
-        return sum;
-    }
+// function isCpfValid(cpf) {
+//     const sumDigits = (string) => {
+//         let sum = 0;
+//         for (let i = 0; i < string.length; i++) {
+//             sum += parseInt(cpf[i]) * (string.length + 1 - i);
+//         }
+//         return sum;
+//     };
 
-    cpf = cpf.toString().replace(/[^0-9]/g, "");
-    if (cpf.length !== 11) {
-        return false;
-    }
+//     cpf = cpf.toString().replace(/[^0-9]/g, "");
+//     if (cpf.length !== 11) {
+//         return false;
+//     }
 
-    const soma1 = sumDigits(cpf.substring(0, 9))
-    const resto1 = soma1 % 11;
-    const digito1 = (11 - resto1) % 10;
+//     const soma1 = sumDigits(cpf.substring(0, 9));
+//     const resto1 = soma1 % 11;
+//     const digito1 = (11 - resto1) % 10;
 
-    const soma2 = sumDigits(cpf.substring(0, 10))
-    const resto2 = soma2 % 11;
-    const digito2 = (11 - resto2) % 10;
+//     const soma2 = sumDigits(cpf.substring(0, 10));
+//     const resto2 = soma2 % 11;
+//     const digito2 = (11 - resto2) % 10;
 
-    return cpf[9] == digito1 && cpf[10] == digito2;
+//     return cpf[9] == digito1 && cpf[10] == digito2;
+// }
+
+function isCpfValid(strCPF) {
+    var sum;
+    var remainder;
+    sum = 0;
+    if (strCPF == "00000000000") return false;
+
+    for (i = 1; i <= 9; i++)
+        sum = sum + parseInt(strCPF.substring(i - 1, i)) * (11 - i);
+    remainder = (sum * 10) % 11;
+
+    if (remainder == 10 || remainder == 11) remainder = 0;
+    if (remainder != parseInt(strCPF.substring(9, 10))) return false;
+
+    sum = 0;
+    for (i = 1; i <= 10; i++)
+        sum = sum + parseInt(strCPF.substring(i - 1, i)) * (12 - i);
+    remainder = (sum * 10) % 11;
+
+    if (remainder == 10 || remainder == 11) remainder = 0;
+    if (remainder != parseInt(strCPF.substring(10, 11))) return false;
+    return true;
 }
 
 function isValidValue(value) {
-    console.log("a", value)
+    console.log("a", value);
     return value >= 1;
 }
 
 function isValidInstallments(value) {
     return value >= 1;
+}
+
+function cleanNonNumbers(inputElement) {
+    const cleanedValue = inputElement.value.replace(/\D/g, '');
+    inputElement.value = cleanedValue;
 }
