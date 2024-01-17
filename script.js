@@ -331,6 +331,7 @@ function validate({
         if (hint && trueMessage) {
             hint.innerHTML = trueMessage;
             hint.classList.remove("hidden");
+            hint.classList.remove("text-red-600");
             hint.classList.add("text-green-600");
         }
         if (validatedElement) validatedElement.classList.remove("invalid");
@@ -339,6 +340,7 @@ function validate({
         if (hint && falseMessage) {
             hint.innerHTML = falseMessage;
             hint.classList.remove("hidden");
+            hint.classList.remove("text-green-600");
             hint.classList.add("text-red-600");
         }
         if (validatedElement) validatedElement.classList.add("invalid");
@@ -377,6 +379,8 @@ function isCpfValid(strCPF) {
     var sum;
     var remainder;
     sum = 0;
+
+    if (strCPF.length !== 11) return false;
     if (strCPF == "00000000000") return false;
 
     for (i = 1; i <= 9; i++)
